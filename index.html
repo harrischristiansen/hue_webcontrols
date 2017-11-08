@@ -8,9 +8,18 @@
 	<script src="hue/colors.js"></script>
 </head><body>
 	<div id="title">Hue Controls</div>
-	<div id="action_btns">
+	<div class="action_btns">
 		<div id="act_on" class="action_btn">All On</div>
 		<div id="act_off" class="action_btn">All Off</div>
+		<div id="act_flash" class="action_btn">Flash</div>
+	</div>
+	<div class="action_btns">
+		<div class="action_title">Brightness</div>
+		<div id="act_decrease" class="action_btn">Decrease</div>
+		<div id="act_increase" class="action_btn">Increase</div>
+		<div class="act_setBright action_btn" data-brightness="40">Low</div>
+		<div class="act_setBright action_btn" data-brightness="150">Mid</div>
+		<div class="act_setBright action_btn" data-brightness="255">High</div>
 	</div>
 	<div id="msgs">
 	</div>
@@ -33,6 +42,26 @@
 			hue.turnOffAll();
 			displayMessage("Lights Off!");
 		});
+		$("#act_flash").click(function() {
+			hue.setAllBrightness(40);
+			setTimeout(function(){ 
+				hue.setAllBrightness(255);
+			}, 700);
+			displayMessage("Lights Flashed!");
+		});
+		$("#act_decrease").click(function() {
+			hue.dimAll();
+			displayMessage("Brightness decreased!");
+		});
+		$("#act_increase").click(function() {
+			hue.brightenAll();
+			displayMessage("Brightness increased!");
+		});
+		$(".act_setBright").click(function(evt) {
+			brightness = parseInt(evt.target.getAttribute('data-brightness'));
+			hue.setAllBrightness(brightness);
+			displayMessage("Brightness set!");
+		});
 		
 		function displayMessage(msg, isFailure=false) {
 			if (isFailure) {
@@ -40,7 +69,10 @@
 			} else {
 				$('<div class="msg msg-green">'+msg+"</div>").appendTo('#msgs').delay(2200).slideUp(300);
 			}
-			
+		}
+
+		function sleep(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms));
 		}
 	</script>
 </body></html>

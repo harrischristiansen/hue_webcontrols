@@ -6,14 +6,19 @@
 #title {
 	text-align: center;
 	font-size: 52px;
-	padding-bottom: 20px;
+	padding-bottom: 10px;
 }
 
 /* --------- Action Buttons --------- */
 
-#action_btns {
+.action_btns {
 	background-color: #BBBBBB;
 	padding: 20px;
+	margin-top: 20px;
+}
+.action_title {
+	text-align: center;
+	font-size: 22px;
 }
 .action_btn {
 	background-color: #5bb9eb;
