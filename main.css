@@ -1,0 +1,47 @@
+/*
+	Stylesheet for Hue Controls
+	@HarrisChristiansen.com
+*/
+
+#title {
+	text-align: center;
+	font-size: 52px;
+	padding-bottom: 20px;
+}
+
+/* --------- Action Buttons --------- */
+
+#action_btns {
+	background-color: #BBBBBB;
+	padding: 20px;
+}
+.action_btn {
+	background-color: #5bb9eb;
+	display: inline-block;
+	padding: 20px;
+	margin-left: 40px;
+	
+	text-align: center;
+	font-size: 26px;
+}
+.action_btn:hover {
+	background-color: #2a9edc;
+	cursor: pointer;
+}
+
+/* --------- Notification Messages --------- */
+
+.msg {
+	padding: 4px 10px;
+	border: 1px solid #999999;
+	margin-top: 15px;
+}
+
+.msg-green {
+	background-color: #169a21;
+	color: #FFFFFF;
+}
+
+.msg-red {
+	background-color: #f50000;
+}

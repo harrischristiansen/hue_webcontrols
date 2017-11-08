@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html><head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<title>Hue Controls</title>
+	<link rel="stylesheet" href="main.css" type="text/css">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="hue/hue.js"></script>
+	<script src="hue/colors.js"></script>
+</head><body>
+	<div id="title">Hue Controls</div>
+	<div id="action_btns">
+		<div id="act_on" class="action_btn">All On</div>
+		<div id="act_off" class="action_btn">All Off</div>
+	</div>
+	<div id="msgs">
+	</div>
+	
+	<script>
+		var hue = hue || window.hue,
+		    IPAddress = '10.3.0.158',
+		    connectedLampCount = 3,
+		    APIKey = 'd5orxbetHKF46FCV1wBmnFTVNSkGQWMSjwNOHu2i';
+		    
+		$(document).ready(function() {
+			hue.setIpAndApiKey(IPAddress, APIKey);
+			displayMessage("Connected!");
+		});
+		$("#act_on").click(function() {
+			hue.turnOnAll();
+			displayMessage("Lights On!");
+		});
+		$("#act_off").click(function() {
+			hue.turnOffAll();
+			displayMessage("Lights Off!");
+		});
+		
+		function displayMessage(msg, isFailure=false) {
+			if (isFailure) {
+				$('<div class="msg msg-red">'+msg+"</div>").appendTo('#msgs').delay(2200).slideUp(300);
+			} else {
+				$('<div class="msg msg-green">'+msg+"</div>").appendTo('#msgs').delay(2200).slideUp(300);
+			}
+			
+		}
+	</script>
+</body></html>
