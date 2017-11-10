@@ -87,7 +87,7 @@ $(".act_setBright").click(function(evt) {
 	displayMessage("Brightness set!");
 });
 
-// ================ Light Assignment ============== //
+// ================ Scenes ============== //
 
 function setRoom(room, color) {
 	for (var i in room) {
@@ -95,6 +95,29 @@ function setRoom(room, color) {
 		setElementColor(room[i], "#"+color);
 	}
 }
+
+$(".setScene").click(function(evt) {
+	var sceneID = evt.target.getAttribute('data-scene');
+	var sceneLights = $("#"+sceneID).children();
+	for (var i in sceneLights) {
+		if (i == "length") {
+			break;
+		}
+		color = hexc(sceneLights[i].style.backgroundColor);
+		classname = "."+sceneLights[i].className.split(' ')[1];
+		light = lightElements[classname];
+		setLightColor(light, color);
+	}
+	displayMessage("Set scene: "+evt.target.text);
+});
+function setScene(room, color) {
+	for (var i in room) {
+		setLightColor(lightElements[getElementClass(room[i])], color);
+		setElementColor(room[i], "#"+color);
+	}
+}
+
+// ================ Light Assignment ============== //
 
 function setColor(color) {
 	classname = "."+$(this).attr("class").split(' ')[1];
@@ -126,7 +149,7 @@ function setLightColor(light, color, element=null) {
 		} else {
 			hue.turnOn(light[0]);
 		}
-		setTimeout(setLightToHex, 50, light[0], color_hex.substring(1, 7));
+		setTimeout(setLightToHex, 100, light[0], color_hex.substring(1, 7));
 		if (element != null) {
 			displayMessage("Set "+light[1]+" light to "+color_hex);
 		}
@@ -240,4 +263,18 @@ function displayMessage(msg, isFailure=false) {
 	} else {
 		$('<div class="alert alert-success" role="alert">'+msg+"</div>").appendTo('#msgs').delay(2200).slideUp(300);
 	}
+}
+
+// ================ Helpers ============== //
+
+function hexc(colorval) {
+    var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    delete(parts[0]);
+    for (var i = 1; i <= 3; ++i) {
+        parts[i] = parseInt(parts[i]).toString(16);
+        if (parts[i].length == 1) parts[i] = '0' + parts[i];
+    }
+    color = '#' + parts.join('');
+
+    return color;
 }

@@ -1,18 +1,35 @@
-<div class="roomLayout">
-	<div class="circleLight sinkLight"></div>
-	<div class="circleLight ovenLight"></div>
-	<div class="circleLight barLight"></div>
-	<div class="circleLight fridgeLight"></div>
-	<div class="circleLight midLight"></div>
-	<div class="circleLight couchLight"></div>
-	<div class="circleLight tvLight"></div>
-	<div class="circleLight windowLight"></div>
-	<div class="circleLight wallLight"></div>
-	<div class="squareLight tableLight"></div>
-	<div class="rectLight deskLight"></div>
-	<div class="circleLight lampTop"></div>
-	<div class="circleLight lampMid"></div>
-	<div class="circleLight lampBtm"></div>
-	<div class="circleLight bathLight"></div>
-	<div class="circleLight guestLight"></div>
+<?
+$sceneID = bin2hex(openssl_random_pseudo_bytes(10));
+
+$DEFAULT_LAYOUT = [
+	"sinkLight" =>		["circleLight",	"#0000FF"],
+	"ovenLight" =>		["circleLight",	"#0000FF"],
+	"barLight" =>		["circleLight",	"#0000FF"],
+	"fridgeLight" => 	["circleLight",	"#0000FF"],
+	"midLight" =>		["circleLight",	"#0000FF"],
+	"couchLight" => 	["circleLight",	"#0000FF"],
+	"tvLight" =>		["circleLight",	"#0000FF"],
+	"windowLight" => 	["circleLight",	"#0000FF"],
+	"wallLight" =>		["circleLight",	"#0000FF"],
+	//"tableLight" => 	["squareLight",	"#0000FF"],
+	"deskLight" =>		["rectLight",	"#0000FF"],
+	"lampTop" =>		["circleLight",	"#0000FF"],
+	"lampMid" =>		["circleLight",	"#0000FF"],
+	"lampBtm" =>		["circleLight",	"#0000FF"],
+	"bathLight" =>		["circleLight",	"#0000FF"],
+	"guestLight" => 	["circleLight",	"#0000FF"],
+];
+?>
+
+<div class="roomLayout" id="<? echo $sceneID; ?>">
+	<? if (!isset($layout)) {
+		$layout = $DEFAULT_LAYOUT;
+	}
+	foreach ($layout as $classname => $details) {
+		echo '<div class="'.$details[0].' '.$classname.'" style="background-color: '.$details[1].'"></div>';
+	}
+	?>
 </div>
+<br>
+<a href="#" class="btn btn-info setScene" data-scene="<? echo $sceneID; ?>"><? echo (strlen($title) > 1) ? $title : "Set Scene"; ?></a>
+<br><br>
