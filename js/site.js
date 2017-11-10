@@ -37,7 +37,7 @@ var lightElements = {
 	".bathLight": [bath_main, "main bathroom"],
 	".guestLight": [bath_guest, "guest bathroom"],
 };
-var color_palette = ['#FF0000', '#904000', '#ffb400', '#ff00b0', '#bb00ff', '#0000FF', '#00FF00', '#8183ff', '#e1e2fb', '#f9bbbb', '#f9bbf1']
+var color_palette = ['#FF0000', '#904000', '#ffb400', '#ff00b0', '#bb00ff', '#0000FF', '#00FF00', '#8183ff', '#e1e2fb', '#f9bbbb', '#f9bbf1', 'transparent']
 
 $(document).ready(function() {
 	hue.setIpAndApiKey(IPAddress, APIKey);
@@ -56,11 +56,19 @@ $("#act_off").click(function() {
 	$(".lightControls").slideUp();
 	displayMessage("Lights Off!");
 });
+var isFlashing = false;
 $("#act_flash").click(function() {
+	if (isFlashing) {
+		return false;
+	}
 	displayMessage("Lights Flashed!");
+	isFlashing = true;
 	for (var i in lights) {
 		setTimeout(flashLight, 260*i, lights[i]);
 	}
+	setTimeout(function() {
+		isFlashing = false;
+	}, 260*lights.length + 2000);
 });
 
 // ================ Brightness ============== //

@@ -9,8 +9,8 @@
 	<link REL="icon" HREF="/images/fav.png">
 
 	<meta name="author" content="Harris Christiansen">
-	<meta name="description" content="HTML5 Boilerplate - Harris Christiansen">
-	<meta name="keywords" content="harris, christiansen, html5, boilerplate">
+	<meta name="description" content="Philips Hue Web Controls">
+	<meta name="keywords" content="harris, christiansen, html5, philips, hue, web, controls, lights, home, automation">
 
 	<!-- BValidator -->
 	<link href="css/plugins/bvalidator.css" rel="stylesheet" type="text/css">
