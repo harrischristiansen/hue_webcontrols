@@ -1,6 +1,4 @@
-<?php
-require('header.php');
-?>
+<? require('header.php'); ?>
 	
 <!-- Content -->
 <main role="main" class="container">
@@ -20,6 +18,4 @@ require('header.php');
 	<div id="msgs"></div>
 </main>
 
-<?php
-require('footer.php');
-?>
+<? require('footer.php'); ?>

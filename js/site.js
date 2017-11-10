@@ -19,12 +19,32 @@ var kitchen = [fridge, sink, oven, bar],
 	living = [windowLight, couch, wall, mid, tv, strip],
 	guest = [lamp_mid, lamp_top, lamp_btm],
 	bath = [bath_main, bath_guest];
+var lightElements = {
+	".sinkLight": [sink, "sink"],
+	".ovenLight": [oven, "oven"],
+	".barLight": [bar, "bar"],
+	".fridgeLight": [fridge, "fridge"],
+	".midLight": [mid, "middle"],
+	".couchLight": [couch, "couch"],
+	".tvLight": [tv, "tv"],
+	".windowLight": [windowLight, "window"],
+	".wallLight": [wall, "wall"],
+	".deskLight": [strip, "tv desk"],
+	".lampTop": [lamp_top, "lamp top"],
+	".lampMid": [lamp_mid, "lamp middle"],
+	".lampBtm": [lamp_btm, "lamp bottom"],
+	".bathLight": [bath_main, "main bathroom"],
+	".guestLight": [bath_guest, "guest bathroom"],
+};
 var color_palette = ['#FF0000', '#00FF00', '#0000FF']
 
 $(document).ready(function() {
 	hue.setIpAndApiKey(IPAddress, APIKey);
 	displayMessage("Connected!");
 });
+
+// ================ Nav Bar ============== //
+
 $("#act_on").click(function() {
 	hue.turnOnAll();
 	displayMessage("Lights On!");
@@ -40,6 +60,41 @@ $("#act_flash").click(function() {
 	}, 1100);
 	displayMessage("Lights Flashed!");
 });
+
+// ================ Brightness ============== //
+
+$("#act_decrease").click(function() {
+	hue.dimAll(50);
+	displayMessage("Brightness decreased!");
+});
+$("#act_increase").click(function() {
+	hue.brightenAll(50);
+	displayMessage("Brightness increased!");
+});
+$(".act_setBright").click(function(evt) {
+	brightness = parseInt(evt.target.getAttribute('data-brightness'));
+	hue.setAllBrightness(brightness);
+	displayMessage("Brightness set!");
+});
+
+// ================ Light Assignment ============== //
+
+function setRoom(room, color) {
+	for (var i in room) {
+		hue.setColor(room[i], color)
+	}
+}
+
+function setColor(color) {
+	lightClass = $(this).attr("class").split(' ')[1];
+	light = lightElements["."+lightClass];
+	hue.setColor(light[0], color.toHexString().substring(1, 7));
+	displayMessage("Set "+light[1]+" light to "+color.toHexString());
+	$(this).css('background-color', color.toHexString());
+}
+
+// ================ Color Pickers ============== //
+
 $("#act_kitchen").spectrum({
 	chooseText: "Set",
 	showPalette: true,
@@ -61,30 +116,21 @@ $("#act_living").spectrum({
 	}
 });
 
-$("#act_decrease").click(function() {
-	hue.dimAll(50);
-	displayMessage("Brightness decreased!");
-});
-$("#act_increase").click(function() {
-	hue.brightenAll(50);
-	displayMessage("Brightness increased!");
-});
-$(".act_setBright").click(function(evt) {
-	brightness = parseInt(evt.target.getAttribute('data-brightness'));
-	hue.setAllBrightness(brightness);
-	displayMessage("Brightness set!");
-});
+for (var i in lightElements) {
+	$(i).spectrum({
+		chooseText: "Set",
+		showPalette: true,
+		palette: color_palette,
+		change: setColor,
+	});
+}
+
+// ================ Display Messages ============== //
 
 function displayMessage(msg, isFailure=false) {
 	if (isFailure) {
 		$('<div class="alert alert-danger" role="alert">'+msg+"</div>").appendTo('#msgs').delay(2200).slideUp(300);
 	} else {
 		$('<div class="alert alert-success" role="alert">'+msg+"</div>").appendTo('#msgs').delay(2200).slideUp(300);
-	}
-}
-
-function setRoom(room, color) {
-	for (var i in room) {
-		hue.setColor(room[i], color)
 	}
 }

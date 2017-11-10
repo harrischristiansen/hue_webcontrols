@@ -19,10 +19,105 @@ main {
 	border-radius: .4rem;
 }
 
-/* ------------------------ Tables ------------------------- */
+/* ------------------------ Room Layout ------------------------- */
 
-.table-clickable tbody tr:hover {
-	cursor: pointer;
+.roomLayout {
+	position: relative;
+	background-color: #CCCCCC;
+	width: 400px;
+	height: 250px;
+}
+
+.circleLight, .squareLight, .rectLight {
+	position: absolute;
+	background-color: #0000FF;
+	border: 1px solid #000000;
+}
+.circleLight {
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	z-index: 1;
+}
+.squareLight {
+	width: 25px;
+	height: 25px;
+	z-index: 0;
+}
+.rectLight {
+	width: 25px;
+	height: 50px;
+	z-index: 0;
+}
+
+.sinkLight {
+	left: 190px;
+	top: 225px;
+}
+.ovenLight {
+	left: 190px;
+	top: 200px;
+}
+.barLight {
+	left: 190px;
+	top: 175px;
+}
+.fridgeLight {
+	left: 160px;
+	top: 170px;
+}
+
+.midLight {
+	left: 190px;
+	top: 95px;
+}
+.couchLight {
+	left: 190px;
+	top: 70px;
+}
+.tvLight {
+	left: 190px;
+	top: 45px;
+}
+.windowLight {
+	left: 190px;
+	top: 20px;
+}
+.wallLight {
+	left: 240px;
+	top: 15px;
+}
+.tableLight {
+	left: 165px;
+	top: 50px;
+}
+.deskLight {
+	left: 235px;
+	top: 40px;
+}
+
+.lampTop {
+	left: 20px;
+	top: 20px;
+}
+.lampMid {
+	left: 35px;
+	top: 35px;
+}
+.lampBtm {
+	left: 50px;
+	top: 50px;
+}
+
+.bathLight {
+	left: 340px;
+	top: 190px;
+}
+.guestLight {
+	left: 40px;
+	top: 190px;
 }
 
 /* ------------------------ End ------------------------- */

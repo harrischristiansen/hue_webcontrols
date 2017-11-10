@@ -40,7 +40,7 @@
 
 	<!-- Navbar -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="/">Hue Controls</a>
+		<a class="navbar-brand" href="index.php">Hue Controls</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -50,6 +50,7 @@
 				<li class="nav-item"><a class="nav-link btn-success" href="#" id="act_on">All On</a></li>
 				<li class="nav-item"><a class="nav-link btn-danger" href="#" id="act_off">All Off</a></li>
 				<li class="nav-item"><a class="nav-link btn-warning" href="#" id="act_flash">Flash</a></li>
+				<li class="nav-item"><a class="nav-link" href="scenes.php" id="act_flash">Scenes</a></li>
 			</ul>
 		</div>
 	</nav>
