@@ -2,6 +2,7 @@
 	
 <!-- Content -->
 <main role="main" class="container">
+	<div id="msgs"></div>
 	<div class="jumbotron text-center">
 		<h1>Brightness</h1><br>
 		<a class="btn btn-success btn-xl" href="#" id="act_incease">Increase</a>
@@ -14,8 +15,11 @@
 	<div class="jumbotron text-center">
 		<a class="btn btn-primary btn-xl" href="#" id="act_kitchen">Kitchen</a>
 		<a class="btn btn-primary btn-xl" href="#" id="act_living">Living</a>
+		<a class="btn btn-primary btn-xl" href="#" id="act_lamp">Lamp</a>
+		<a class="btn btn-primary btn-xl" href="#" id="act_bath">Bath</a>
+		<br><br>
+		<? require('roomLayout.php'); ?>
 	</div>
-	<div id="msgs"></div>
 </main>
 
 <? require('footer.php'); ?>

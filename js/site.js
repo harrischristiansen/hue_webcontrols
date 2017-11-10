@@ -15,9 +15,10 @@ var windowLight = 5, couch = 6, wall = 7, mid = 8, tv = 9, strip = 18
 	lamp_mid = 10, lamp_top = 11, lamp_btm = 12,
 	bath_main = 16, bath_guest = 17,
 	fridge = 4, sink = 19, oven = 20, bar = 21;
-var kitchen = [fridge, sink, oven, bar],
-	living = [windowLight, couch, wall, mid, tv, strip],
-	guest = [lamp_mid, lamp_top, lamp_btm],
+var lights = [sink, oven, bar, fridge, mid, couch, tv, windowLight, strip, wall, lamp_top, lamp_mid, lamp_btm, bath_main, bath_guest]
+	kitchen = [sink, oven, bar, fridge],
+	living = [mid, couch, tv, windowLight, strip, wall],
+	lamp = [lamp_top, lamp_mid, lamp_btm],
 	bath = [bath_main, bath_guest];
 var lightElements = {
 	".sinkLight": [sink, "sink"],
@@ -36,7 +37,7 @@ var lightElements = {
 	".bathLight": [bath_main, "main bathroom"],
 	".guestLight": [bath_guest, "guest bathroom"],
 };
-var color_palette = ['#FF0000', '#00FF00', '#0000FF']
+var color_palette = ['#FF0000', '#904000', '#ffb400', '#ff00b0', '#bb00ff', '#0000FF', '#00FF00', '#8183ff', '#e1e2fb', '#f9bbbb', '#f9bbf1']
 
 $(document).ready(function() {
 	hue.setIpAndApiKey(IPAddress, APIKey);
@@ -54,11 +55,10 @@ $("#act_off").click(function() {
 	displayMessage("Lights Off!");
 });
 $("#act_flash").click(function() {
-	hue.turnOffAll();
-	setTimeout(function(){ 
-		hue.turnOnAll();
-	}, 1100);
 	displayMessage("Lights Flashed!");
+	for (var i in lights) {
+		setTimeout(flashLight, 260*i, lights[i]);
+	}
 });
 
 // ================ Brightness ============== //
@@ -81,7 +81,8 @@ $(".act_setBright").click(function(evt) {
 
 function setRoom(room, color) {
 	for (var i in room) {
-		hue.setColor(room[i], color)
+		hue.setColor(room[i], color);
+		setElementColor(room[i], "#"+color);
 	}
 }
 
@@ -93,6 +94,47 @@ function setColor(color) {
 	$(this).css('background-color', color.toHexString());
 }
 
+function flashLight(light) {
+	hue.turnOff(light);
+	flashLightElement(light);
+	setTimeout(function() {
+		hue.turnOn(light);
+	}, 1200);
+}
+
+// ================ HTML Light Element Assignment ============== //
+
+function getElementClass(light) {
+	var classname = "";
+	for (var i in lightElements) {
+		if (lightElements[i][0] == light) {
+			classname = i;
+			break;
+		}
+	}
+	return classname
+}
+
+function setElementColor(light, color) {
+	if (Number.isInteger(light)) {
+		light = getElementClass(light)
+	}
+
+	$(light).css('background-color', color);
+}
+
+function flashLightElement(light) {
+	if (Number.isInteger(light)) {
+		light = getElementClass(light)
+	}
+
+	bgcolor = $(light).css('background-color');
+	setElementColor(light, '#000000');
+	setTimeout(function() {
+		setElementColor(light, bgcolor);
+	}, 1400);
+}
+
 // ================ Color Pickers ============== //
 
 $("#act_kitchen").spectrum({
@@ -101,7 +143,7 @@ $("#act_kitchen").spectrum({
 	palette: color_palette,
 	change: function(color) {
 		setRoom(kitchen, color.toHexString().substring(1, 7));
-		displayMessage("Set kitchen to "+color.toHexString());
+		displayMessage("Set kitchen lights to "+color.toHexString());
 		$("#act_kitchen").css('background-color', color.toHexString());
 	}
 });
@@ -111,8 +153,28 @@ $("#act_living").spectrum({
 	palette: color_palette,
 	change: function(color) {
 		setRoom(living, color.toHexString().substring(1, 7));
-		displayMessage("Set living room to "+color.toHexString());
+		displayMessage("Set living room lights to "+color.toHexString());
 		$("#act_living").css('background-color', color.toHexString());
+	}
+});
+$("#act_lamp").spectrum({
+	chooseText: "Set",
+	showPalette: true,
+	palette: color_palette,
+	change: function(color) {
+		setRoom(lamp, color.toHexString().substring(1, 7));
+		displayMessage("Set lamp lights to "+color.toHexString());
+		$("#act_lamp").css('background-color', color.toHexString());
+	}
+});
+$("#act_bath").spectrum({
+	chooseText: "Set",
+	showPalette: true,
+	palette: color_palette,
+	change: function(color) {
+		setRoom(bath, color.toHexString().substring(1, 7));
+		displayMessage("Set bathroom lights to "+color.toHexString());
+		$("#act_bath").css('background-color', color.toHexString());
 	}
 });
 
