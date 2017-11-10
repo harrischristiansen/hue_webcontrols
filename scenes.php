@@ -2,11 +2,11 @@
 	
 <!-- Content -->
 <main role="main" class="container">
-	<div class="jumbotron text-center">
+	<div id="msgs"></div>
+	<div class="jumbotron text-center lightControls">
 		<h1>Scenes</h1><br>
 		<? require('roomLayout.php'); ?>
 	</div>
-	<div id="msgs"></div>
 </main>
 
 <? require('footer.php'); ?>

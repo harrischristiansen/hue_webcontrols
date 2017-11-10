@@ -48,10 +48,12 @@ $(document).ready(function() {
 
 $("#act_on").click(function() {
 	hue.turnOnAll();
+	$(".lightControls").slideDown();
 	displayMessage("Lights On!");
 });
 $("#act_off").click(function() {
 	hue.turnOffAll();
+	$(".lightControls").slideUp();
 	displayMessage("Lights Off!");
 });
 $("#act_flash").click(function() {
