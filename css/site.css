@@ -1,0 +1,28 @@
+/*
+	@ Harris Christiansen (Harris@HarrisChristiansen.com)
+	November 2017
+	Project: Hue Web Controls
+*/
+
+/* ------------------------ HTML/Body ------------------------- */
+
+main {
+	padding-top: 30px;
+}
+
+/* ------------------------ Buttons ------------------------- */
+
+.btn-xl {
+	padding: .75rem 1.5rem;
+	font-size: 1.5rem;
+	line-height: 1.5;
+	border-radius: .4rem;
+}
+
+/* ------------------------ Tables ------------------------- */
+
+.table-clickable tbody tr:hover {
+	cursor: pointer;
+}
+
+/* ------------------------ End ------------------------- */
