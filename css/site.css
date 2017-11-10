@@ -24,6 +24,18 @@ main {
 	border-radius: .4rem;
 }
 
+.btn-orange {
+	color: #111;
+	background-color: #FFA500;
+	border-color: #FFA500;
+}
+
+.btn-teal {
+	color: #111;
+	background-color: #11A2A6;
+	border-color: #11A2A6
+}
+
 /* ------------------------ Room Layout ------------------------- */
 
 .roomLayout {

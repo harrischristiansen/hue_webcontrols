@@ -37,7 +37,7 @@ var lightElements = {
 	".bathLight": [bath_main, "main bathroom"],
 	".guestLight": [bath_guest, "guest bathroom"],
 };
-var color_palette = ['#FF0000', '#904000', '#ffb400', '#ff00b0', '#bb00ff', '#0000FF', '#00FF00', '#8183ff', '#e1e2fb', '#f9bbbb', '#f9bbf1', 'transparent']
+var color_palette = ['transparent', '#000001', '#FF0000', '#904000', '#ffb400', '#ff00b0', '#bb00ff', '#0000FF', '#00FF00', '#8183ff', '#e1e2fb', '#f9bbbb', '#f9bbf1']
 
 $(document).ready(function() {
 	hue.setIpAndApiKey(IPAddress, APIKey);
@@ -91,17 +91,50 @@ $(".act_setBright").click(function(evt) {
 
 function setRoom(room, color) {
 	for (var i in room) {
-		hue.setColor(room[i], color);
+		setLightColor(lightElements[getElementClass(room[i])], color);
 		setElementColor(room[i], "#"+color);
 	}
 }
 
 function setColor(color) {
-	lightClass = $(this).attr("class").split(' ')[1];
-	light = lightElements["."+lightClass];
-	hue.setColor(light[0], color.toHexString().substring(1, 7));
-	displayMessage("Set "+light[1]+" light to "+color.toHexString());
-	$(this).css('background-color', color.toHexString());
+	classname = "."+$(this).attr("class").split(' ')[1];
+	light = lightElements[classname];
+
+	setLightColor(light, color, $(this));
+	setElementColor($(this), color.toHexString());
+}
+
+function setLightColor(light, color, element=null) {
+	if (color._a == 0) {
+		return false;
+	}
+	color_hex = "";
+	if (typeof color === 'string' || color instanceof String) {
+		color_hex = color;
+	} else {
+		color_hex = color.toHexString()
+	}
+
+	if (color_hex == "#000000" || color_hex == "#000001") {
+		hue.turnOff(light[0]);
+	} else {
+		if (element != null) {
+			bgcolor = element.css('background-color');
+			if ((bgcolor == "rgb(0, 0, 0)" || bgcolor == "rgb(0, 0, 1)")) {
+				hue.turnOn(light[0]);
+			}
+		} else {
+			hue.turnOn(light[0]);
+		}
+		setTimeout(setLightToHex, 50, light[0], color_hex.substring(1, 7));
+		if (element != null) {
+			displayMessage("Set "+light[1]+" light to "+color_hex);
+		}
+	}
+}
+
+function setLightToHex(lightID, colorHex) {
+	hue.setColor(lightID, colorHex);
 }
 
 function flashLight(light) {
@@ -130,7 +163,11 @@ function setElementColor(light, color) {
 		light = getElementClass(light)
 	}
 
-	$(light).css('background-color', color);
+	if (typeof light === 'string' || light instanceof String) {
+		$(light).css('background-color', color);
+	} else {
+		light.css('background-color', color);
+	}
 }
 
 function flashLightElement(light) {
@@ -140,9 +177,7 @@ function flashLightElement(light) {
 
 	bgcolor = $(light).css('background-color');
 	setElementColor(light, '#000000');
-	setTimeout(function() {
-		setElementColor(light, bgcolor);
-	}, 1400);
+	setTimeout(setElementColor, 1400, light, bgcolor);
 }
 
 // ================ Color Pickers ============== //
@@ -152,7 +187,7 @@ $("#act_kitchen").spectrum({
 	showPalette: true,
 	palette: color_palette,
 	change: function(color) {
-		setRoom(kitchen, color.toHexString().substring(1, 7));
+		setRoom(kitchen, color);
 		displayMessage("Set kitchen lights to "+color.toHexString());
 		$("#act_kitchen").css('background-color', color.toHexString());
 	}
@@ -162,7 +197,7 @@ $("#act_living").spectrum({
 	showPalette: true,
 	palette: color_palette,
 	change: function(color) {
-		setRoom(living, color.toHexString().substring(1, 7));
+		setRoom(living, color);
 		displayMessage("Set living room lights to "+color.toHexString());
 		$("#act_living").css('background-color', color.toHexString());
 	}
@@ -172,7 +207,7 @@ $("#act_lamp").spectrum({
 	showPalette: true,
 	palette: color_palette,
 	change: function(color) {
-		setRoom(lamp, color.toHexString().substring(1, 7));
+		setRoom(lamp, color);
 		displayMessage("Set lamp lights to "+color.toHexString());
 		$("#act_lamp").css('background-color', color.toHexString());
 	}
@@ -182,7 +217,7 @@ $("#act_bath").spectrum({
 	showPalette: true,
 	palette: color_palette,
 	change: function(color) {
-		setRoom(bath, color.toHexString().substring(1, 7));
+		setRoom(bath, color);
 		displayMessage("Set bathroom lights to "+color.toHexString());
 		$("#act_bath").css('background-color', color.toHexString());
 	}
