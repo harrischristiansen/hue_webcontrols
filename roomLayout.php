@@ -30,6 +30,8 @@ $DEFAULT_LAYOUT = [
 	}
 	?>
 </div>
+<? if (strlen($title) > 1) { ?>
 <br>
-<a href="#" class="btn btn-info setScene" data-scene="<? echo $sceneID; ?>"><? echo (strlen($title) > 1) ? $title : "Set Scene"; ?></a>
+<button class="btn btn-info setScene" data-scene="<? echo $sceneID; ?>"><? echo $title; ?></button>
+<? } ?>
 <br><br>

@@ -17,6 +17,10 @@ main {
 
 /* ------------------------ Buttons ------------------------- */
 
+button.btn:hover {
+	cursor: pointer;
+}
+
 .btn-xl {
 	padding: .75rem 1.5rem;
 	font-size: 1.5rem;
