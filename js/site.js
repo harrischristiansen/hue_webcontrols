@@ -124,12 +124,12 @@ $(".setScene").click(function(evt) {
 		if (i == "length") {
 			break;
 		}
-		color = hexc(sceneLights[i].style.backgroundColor);
+		color = rgbStringToHex(sceneLights[i].style.backgroundColor);
 		classname = "."+sceneLights[i].className.split(' ')[1];
 		light = lightElements[classname];
 		setLightColor(light, color);
 	}
-	displayMessage("Set scene: "+evt.target.text);
+	displayMessage("Set scene: "+evt.target.innerText);
 });
 function setScene(room, color) {
 	for (var i in room) {
@@ -148,8 +148,10 @@ function loadCurrentLights() {
 		}
 		classname = "."+lights[i].className.split(' ')[1];
 		light = lightElements[classname];
-		color = hue.getColorHex(light[0]);
-		$(".currentLights > "+classname).css("background-color", "#"+color);
+		color = "#"+hue.getColorHex(light[0]);
+		alpha = hue.getBrightnessValue(light[0]) / 255;
+		$(".currentLights > "+classname).css("background-color", color);
+		$(".currentLights > "+classname).spectrum("set", colors.hexToRGBString(color, alpha));
 	}
 }
 
@@ -187,14 +189,14 @@ function setLightColor(light, color, element=null) {
 		}
 		setTimeout(setLightToHex, 100, light[0], color_hex.substring(1, 7), Math.ceil(color._a*255));
 		if (element != null) {
-			displayMessage("Set "+light[1]+" light to "+color_hex);
+			displayMessage("Set "+light[1]+" light to <span style=\"color: "+color_hex+";\">"+color_hex+"</span>");
 		}
 	}
 }
 
 function setLightToHex(lightID, colorHex, brightness=null) {
 	hue.setColor(lightID, colorHex);
-	if (brightness != null && brightness > 1 && brightness < 254) {
+	if (brightness != null && brightness > 1 && brightness <= 255) {
 		hue.setBrightness(lightID, brightness);
 	}
 }
@@ -303,15 +305,20 @@ for (var i in lightElements) {
 
 function displayMessage(msg, isFailure=false) {
 	if (isFailure) {
-		$('<div class="alert alert-danger" role="alert">'+msg+"</div>").appendTo('#msgs').delay(2200).slideUp(300);
+		var element = $('<div class="alert alert-danger" role="alert">'+msg+"</div>").appendTo('#msgs').delay(2200).slideUp(300);
 	} else {
-		$('<div class="alert alert-success" role="alert">'+msg+"</div>").appendTo('#msgs').delay(2200).slideUp(300);
+		var element = $('<div class="alert alert-success" role="alert">'+msg+"</div>").appendTo('#msgs').delay(2200).slideUp(300);
 	}
+	setTimeout(removeElement, 10000, element);
+}
+
+function removeElement(element) {
+	element.remove();
 }
 
 // ================ Helpers ============== //
 
-function hexc(colorval) {
+function rgbStringToHex(colorval) {
     var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
     delete(parts[0]);
     for (var i = 1; i <= 3; ++i) {

@@ -331,6 +331,15 @@ var hue = function ($, colors) {
             return putGroupAction(0, onState);
         },
         /**
+         * Get the brightness of the lamp at lampIndex.
+         *
+         * @param {Number} lampIndex 1-based index of the Hue lamp to modify.
+         * @return {Number} Brightness Value
+         */
+        getBrightnessValue: function(lampIndex /* Number */) {
+            return getBrightness(lampIndex);
+        },
+        /**
          * Set the brightness of the lamp at lampIndex.
          *
          * @param {Number} lampIndex 1-based index of the Hue lamp to modify.

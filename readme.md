@@ -1,5 +1,7 @@
 # Hue Web Controller
 
+![Hue Web Controller UI](http://files.harrischristiansen.com/2E2l3V1f0U0w/hue_webcontrols.png "Hue Web Controller UI")
+
 ## Synopsis
 
 Basic web controller for [Hue](http://meethue.com) lighting system.
