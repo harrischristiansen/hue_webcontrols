@@ -132,7 +132,6 @@ function loadCurrentLights() {
 		classname = "."+lights[i].className.split(' ')[1];
 		light = lightElements[classname];
 		color = hue.getColorHex(light[0]);
-		console.log("Loaded light "+light+" with color "+color);
 		$(".currentLights > "+classname).css("background-color", "#"+color);
 	}
 }
@@ -179,7 +178,6 @@ function setLightColor(light, color, element=null) {
 function setLightToHex(lightID, colorHex, brightness=null) {
 	hue.setColor(lightID, colorHex);
 	if (brightness != null && brightness > 1 && brightness < 254) {
-		console.log("Set Brightness: "+brightness);
 		hue.setBrightness(lightID, brightness);
 	}
 }

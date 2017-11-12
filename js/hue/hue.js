@@ -274,7 +274,11 @@ var hue = function ($, colors) {
          * @return {Object} JSON object containing lamp state.
          */
         setColor: function(lampIndex /* Number */, color /* String */) {
-            var state = buildXYState(colors.getCIEColor(color));
+            if (typeof(color) === 'string') {
+                var state = buildXYState(colors.getCIEColor(color));
+            } else {
+                var state = buildXYState(color);
+            }
             return put(lampIndex, state);
         },
         /**
@@ -285,7 +289,11 @@ var hue = function ($, colors) {
          * @return {Object} JSON object containing lamp state.
          */
         setAllColors: function(color /* String */) {
-            var state = buildXYState(colors.getCIEColor(color));
+            if (typeof(color) === 'string') {
+                var state = buildXYState(colors.getCIEColor(color));
+            } else {
+                var state = buildXYState(color);
+            }
             return putGroupAction(0, state);
         },
         /**
