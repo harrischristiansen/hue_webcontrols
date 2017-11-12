@@ -149,15 +149,19 @@ function setLightColor(light, color, element=null) {
 		} else {
 			hue.turnOn(light[0]);
 		}
-		setTimeout(setLightToHex, 100, light[0], color_hex.substring(1, 7));
+		setTimeout(setLightToHex, 100, light[0], color_hex.substring(1, 7), Math.ceil(color._a*255));
 		if (element != null) {
 			displayMessage("Set "+light[1]+" light to "+color_hex);
 		}
 	}
 }
 
-function setLightToHex(lightID, colorHex) {
+function setLightToHex(lightID, colorHex, brightness=null) {
 	hue.setColor(lightID, colorHex);
+	if (brightness != null && brightness > 1 && brightness < 254) {
+		console.log("Set Brightness: "+brightness);
+		hue.setBrightness(lightID, brightness);
+	}
 }
 
 function flashLight(light) {
@@ -207,6 +211,7 @@ function flashLightElement(light) {
 
 $("#act_kitchen").spectrum({
 	chooseText: "Set",
+	showAlpha: true,
 	showPalette: true,
 	palette: color_palette,
 	change: function(color) {
@@ -217,6 +222,7 @@ $("#act_kitchen").spectrum({
 });
 $("#act_living").spectrum({
 	chooseText: "Set",
+	showAlpha: true,
 	showPalette: true,
 	palette: color_palette,
 	change: function(color) {
@@ -227,6 +233,7 @@ $("#act_living").spectrum({
 });
 $("#act_lamp").spectrum({
 	chooseText: "Set",
+	showAlpha: true,
 	showPalette: true,
 	palette: color_palette,
 	change: function(color) {
@@ -237,6 +244,7 @@ $("#act_lamp").spectrum({
 });
 $("#act_bath").spectrum({
 	chooseText: "Set",
+	showAlpha: true,
 	showPalette: true,
 	palette: color_palette,
 	change: function(color) {
@@ -249,6 +257,7 @@ $("#act_bath").spectrum({
 for (var i in lightElements) {
 	$(i).spectrum({
 		chooseText: "Set",
+		showAlpha: true,
 		showPalette: true,
 		palette: color_palette,
 		change: setColor,
