@@ -5,7 +5,7 @@
 	<div id="msgs"></div>
 	<div class="jumbotron text-center lightControls">
 		<h1>Brightness</h1><br>
-		<a class="btn btn-success btn-xl" href="#" id="act_incease">Increase</a>
+		<a class="btn btn-success btn-xl" href="#" id="act_increase">Increase</a>
 		<a class="btn btn-danger btn-xl" href="#" id="act_decrease">Decrease</a>
 		<br><br>
 		<a class="btn btn-danger btn-xl act_setBright" href="#" data-brightness="25">Low</a>

@@ -48,6 +48,8 @@ $(document).ready(function() {
 	loadCurrentLights();
 });
 
+var isBusy = false;
+
 // ================ Nav Bar ============== //
 
 $("#act_on").click(function() {
@@ -60,30 +62,45 @@ $("#act_off").click(function() {
 	$(".lightControls").slideUp();
 	displayMessage("Lights Off!");
 });
-var isFlashing = false;
 $("#act_flash").click(function() {
-	if (isFlashing) {
+	if (isBusy) {
 		return false;
 	}
 	displayMessage("Lights Flashed!");
-	isFlashing = true;
+	isBusy = true;
 	for (var i in lights) {
 		setTimeout(flashLight, 260*i, lights[i]);
 	}
 	setTimeout(function() {
-		isFlashing = false;
+		isBusy = false;
 	}, 260*lights.length + 2000);
 });
 
 // ================ Brightness ============== //
 
 $("#act_decrease").click(function() {
-	hue.dimAll(50);
+	if (isBusy) {
+		return false;
+	}
+	isBusy = true;
+
 	displayMessage("Brightness decreased!");
+	hue.dimAll(50);
+	setTimeout(function() {
+		isBusy = false;
+	}, 1000);
 });
 $("#act_increase").click(function() {
-	hue.brightenAll(50);
+	if (isBusy) {
+		return false;
+	}
+	isBusy = true;
+
 	displayMessage("Brightness increased!");
+	hue.brightenAll(50);
+	setTimeout(function() {
+		isBusy = false;
+	}, 1000);
 });
 $(".act_setBright").click(function(evt) {
 	brightness = parseInt(evt.target.getAttribute('data-brightness'));
