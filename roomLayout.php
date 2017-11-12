@@ -21,7 +21,7 @@ $DEFAULT_LAYOUT = [
 ];
 ?>
 
-<div class="roomLayout" id="<? echo $sceneID; ?>">
+<div class="roomLayout <? if (isset($currentLights)) { echo 'currentLights'; } ?>" id="<? echo $sceneID; ?>">
 	<? if (!isset($layout)) {
 		$layout = $DEFAULT_LAYOUT;
 	}

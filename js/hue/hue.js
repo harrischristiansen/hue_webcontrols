@@ -17,7 +17,7 @@ var hue = function ($, colors) {
         baseUrl = 'http://' + bridgeIP + '/api',
         baseApiUrl = baseUrl + '/' + apiKey,
         lastResult = null,
-        numberOfLamps = 25, // defaulted to the # of lamps included in the starter kit, update if you've connected additional bulbs
+        lightIDs = [], // Array of hue light index IDs
         offState = { on: false },
         onState = { on: true },
         shortFlashState = { alert: shortFlashType },
@@ -145,8 +145,8 @@ var hue = function ($, colors) {
             var callback = success || null;
             callback = null === callback ? apiSuccess : success;
             
-            for(var i = 0; i < numberOfLamps; ++i) {
-                putJSON(buildStateURL(i+1), callback, data);
+            for (var i in lightIDs) {
+                putJSON(buildStateURL(lightIDs[i]), callback, data);
             }
             return data;
         },
@@ -188,6 +188,21 @@ var hue = function ($, colors) {
         getBrightness = function(lampIndex /* Number */) {
             var lampState = get(buildLampQueryURL(lampIndex));
             return lampState.state.bri;
+        },
+        
+        /**
+         * Returns the brightness of the lamp at lampIndex.
+         *
+         * @param {Number} lampIndex 1-based index of the lamp to query.
+         * @return {Number} Brightness of the lamp at lampIndex. 0 - 255.
+         */
+        getColor = function(lampIndex /* Number */) {
+            var lampState = get(buildLampQueryURL(lampIndex));
+            return {
+                x: lampState.state.xy[0],
+                y: lampState.state.xy[1],
+                bri: lampState.state.bri,
+            };
         },
         
         /**
@@ -237,6 +252,18 @@ var hue = function ($, colors) {
          */
         longFlashAll: function() {
             return putAll(longFlashState);
+        },
+        /** 
+         * Set the lamp at lampIndex to the approximate CIE x,y equivalent of 
+         * the provided hex color.
+         *
+         * @param {Number} lampIndex 1-based index of the Hue lamp to colorize.
+         * @param {String} color String representing a hexadecimal color value.
+         * @return {Object} JSON object containing lamp state.
+         */
+        getColorHex: function(lampIndex /* Number */) {
+            var color = getColor(lampIndex);
+            return colors.CIE1931ToHex(color.x, color.y, color.bri);
         },
         /** 
          * Set the lamp at lampIndex to the approximate CIE x,y equivalent of 
@@ -349,8 +376,8 @@ var hue = function ($, colors) {
          */
         dimAll: function(decrement /* Number */) {
             var states = [];
-            for(var i = 0; i < numberOfLamps; ++i ) {
-                states[i] = this.dim(i + 1, decrement);
+            for (var i in lightIDs) {
+                states[i] = this.dim(lightIDs[i], decrement);
             }
             return states;
         },
@@ -376,8 +403,8 @@ var hue = function ($, colors) {
          */
         brightenAll: function(increment /* Number */) {
             var states = [];
-            for(var i = 0; i < numberOfLamps; ++i) {
-                states[i] = this.brighten(i + 1, increment);
+            for (var i in lightIDs) {
+                states[i] = this.brighten(lightIDs[i], increment);
             }
             return states;
         },
@@ -415,9 +442,9 @@ var hue = function ($, colors) {
          *
          * @param {Number} The total number of lamps available to interact with. Default is 3.
          */
-        setNumberOfLamps: function(numLamps /* Number */) {
-            if(typeof(numLamps) === 'number') {
-                numberOfLamps = numLamps;
+        setLightIDs: function(lights /* List */) {
+            if (typeof(lights) === 'object') {
+                lightIDs = lights;
             }
         }
     };

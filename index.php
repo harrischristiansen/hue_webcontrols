@@ -20,7 +20,7 @@
 		<a class="btn btn-primary btn-xl" href="#" id="act_lamp">Lamp</a>
 		<a class="btn btn-primary btn-xl" href="#" id="act_bath">Bath</a>
 		<br><br>
-		<? require('roomLayout.php'); ?>
+		<? $currentLights = true; require('roomLayout.php'); ?>
 	</div>
 </main>
 

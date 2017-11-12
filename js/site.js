@@ -41,7 +41,11 @@ var color_palette = ['transparent', '#000001', '#FF0000', '#904000', '#ffb400', 
 
 $(document).ready(function() {
 	hue.setIpAndApiKey(IPAddress, APIKey);
+	hue.setLightIDs(lights);
 	displayMessage("Connected!");
+
+	// Load Current Light Colors
+	loadCurrentLights();
 });
 
 // ================ Nav Bar ============== //
@@ -114,6 +118,22 @@ function setScene(room, color) {
 	for (var i in room) {
 		setLightColor(lightElements[getElementClass(room[i])], color);
 		setElementColor(room[i], "#"+color);
+	}
+}
+
+// ================ Light Status ============== //
+
+function loadCurrentLights() {
+	var lights = $(".currentLights").children();
+	for (var i in lights) {
+		if (i == "length") {
+			break;
+		}
+		classname = "."+lights[i].className.split(' ')[1];
+		light = lightElements[classname];
+		color = hue.getColorHex(light[0]);
+		console.log("Loaded light "+light+" with color "+color);
+		$(".currentLights > "+classname).css("background-color", "#"+color);
 	}
 }
 
