@@ -42,10 +42,13 @@ var color_palette = ['transparent', '#000001', '#FF0000', '#904000', '#ffb400', 
 $(document).ready(function() {
 	hue.setIpAndApiKey(IPAddress, APIKey);
 	hue.setLightIDs(lights);
-	displayMessage("Connected!");
 
-	// Load Current Light Colors
-	loadCurrentLights();
+	try {
+		loadCurrentLights();
+		displayMessage("Connected!");
+	} catch (e) {
+		displayMessage("Not Connected!", isFailure=true);
+	}
 });
 
 var isBusy = false;

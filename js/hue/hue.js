@@ -80,6 +80,8 @@ var hue = function ($, colors) {
             $.ajaxSetup({async: false});
             $.getJSON(destination, function(data) {
                 stateData = data;
+            }).fail(function() {
+                throw "NoConnection";
             });
             return stateData;
         },
