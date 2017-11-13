@@ -87,10 +87,11 @@ $("#act_decrease").click(function() {
 	}
 	isBusy = true;
 
-	displayMessage("Brightness decreased!");
 	hue.dimAll(50);
+	displayMessage("Brightness decreased!");
 	setTimeout(function() {
 		isBusy = false;
+		loadCurrentLights();
 	}, 1000);
 });
 $("#act_increase").click(function() {
@@ -99,16 +100,18 @@ $("#act_increase").click(function() {
 	}
 	isBusy = true;
 
-	displayMessage("Brightness increased!");
 	hue.brightenAll(50);
+	displayMessage("Brightness increased!");
 	setTimeout(function() {
 		isBusy = false;
+		loadCurrentLights();
 	}, 1000);
 });
 $(".act_setBright").click(function(evt) {
 	brightness = parseInt(evt.target.getAttribute('data-brightness'));
 	hue.setAllBrightness(brightness);
-	displayMessage("Brightness set!");
+	displayMessage("Brightness set to "+parseInt(brightness/255*100)+"%!");
+	loadCurrentLights();
 });
 
 // ================ Scenes ============== //
