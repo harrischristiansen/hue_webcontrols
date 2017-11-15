@@ -49,6 +49,8 @@ $(document).ready(function() {
 	} catch (e) {
 		displayMessage("Not Connected!", isFailure=true);
 	}
+
+	loadScenes();
 });
 
 var isBusy = false;
@@ -130,9 +132,9 @@ $(".setScene").click(function(evt) {
 		if (i == "length") {
 			break;
 		}
-		color = rgbStringToHex(sceneLights[i].style.backgroundColor);
 		classname = "."+sceneLights[i].className.split(' ')[1];
 		light = lightElements[classname];
+		color = $("#"+sceneID+" > "+classname).spectrum("get");
 		setLightColor(light, color);
 	}
 	displayMessage("Set scene: "+evt.target.innerText);
@@ -157,8 +159,24 @@ function loadCurrentLights() {
 		color = "#"+hue.getColorHex(light[0]);
 		alpha = hue.getBrightnessValue(light[0]) / 255;
 		$(".currentLights > "+classname).css("background-color", color);
-		$(".currentLights > "+classname).spectrum("set", colors.hexToRGBString(color, alpha));
+		$(".currentLights > "+classname).spectrum("set", colors.hexToRGBAString(color, alpha));
 	}
+}
+
+function loadScenes() {
+	$(".sceneMap").each(function(index) {
+		var sceneID = $(this).attr('id')
+		var sceneLights = $(this).children();
+		for (var i in sceneLights) {
+			if (i == "length") {
+				break;
+			}
+			classname = "."+sceneLights[i].className.split(' ')[1];
+			light = lightElements[classname];
+			color = sceneLights[i].getAttribute("data-initial-color");
+			$("#"+sceneID+" > "+classname).spectrum("set", color);
+		}
+	});
 }
 
 // ================ Light Assignment ============== //

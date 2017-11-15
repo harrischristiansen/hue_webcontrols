@@ -21,12 +21,12 @@ $DEFAULT_LAYOUT = [
 ];
 ?>
 
-<div class="roomLayout <? if (isset($currentLights)) { echo 'currentLights'; } ?>" id="<? echo $sceneID; ?>">
+<div class="roomLayout <? if (isset($currentLights)) { echo 'currentLights'; } ?> <? if (strlen($title) > 1) { echo 'sceneMap'; } ?>" id="<? echo $sceneID; ?>">
 	<? if (!isset($layout)) {
 		$layout = $DEFAULT_LAYOUT;
 	}
 	foreach ($layout as $classname => $details) {
-		echo '<div class="'.$details[0].' '.$classname.'" style="background-color: '.$details[1].'"></div>';
+		echo '<div class="'.$details[0].' '.$classname.'" style="background-color: '.$details[1].'" data-initial-color="'.$details[1].'"></div>';
 	}
 	?>
 </div>
