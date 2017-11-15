@@ -260,9 +260,17 @@ var colors = function () {
             return rgbToHex(rgb[0], rgb[1], rgb[2]);
         },
 
+        /* ------------- RGB/Hex Conversion ------------- */
+
         hexToRGBAString : function (hexColor /* String */, alpha=1) {
             var rgbValue = hexToRGB(hexColor.substring(1, 7));
             return "rgba("+rgbValue[0]+", "+rgbValue[1]+", "+rgbValue[2]+", "+alpha+")";
+        },
+
+        RGBStringToHex : function (rgbString) {
+            var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+            color = '#' + rgbToHex(parts[1], parts[2], parts[3]);
+            return color
         },
 
         hexFullRed:     "FF0000",

@@ -8,7 +8,6 @@
 var	colors = colors || window.colors,
 	hue = hue || window.hue,
 	IPAddress = '10.3.0.158',
-	connectedLampCount = 3,
 	APIKey = 'd5orxbetHKF46FCV1wBmnFTVNSkGQWMSjwNOHu2i';
 
 var windowLight = 5, couch = 6, wall = 7, mid = 8, tv = 9, strip = 18
@@ -39,7 +38,14 @@ var lightElements = {
 };
 var color_palette = ['transparent', '#000001', '#FF0000', '#904000', '#ffb400', '#ff00b0', '#bb00ff', '#0000FF', '#00FF00', '#8183ff', '#e1e2fb', '#f9bbbb', '#f9bbf1']
 
-$(document).ready(function() {
+// ================ Setup ============== //
+
+$(document).ready(documentReady);
+
+function documentReady() {
+	setupPage();
+
+	// Configure Hue
 	hue.setIpAndApiKey(IPAddress, APIKey);
 	hue.setLightIDs(lights);
 
@@ -49,72 +55,77 @@ $(document).ready(function() {
 	} catch (e) {
 		displayMessage("Not Connected!", isFailure=true);
 	}
+}
 
-	loadScenes();
-});
+function setupPage() {
+	createButtonListeners();
+	createColorpickers();
+}
 
 var isBusy = false;
 
-// ================ Nav Bar ============== //
+function createButtonListeners() {
+	// ================ Nav Bar ============== //
 
-$("#act_on").click(function() {
-	hue.turnOnAll();
-	$(".lightControls").slideDown();
-	displayMessage("Lights On!");
-});
-$("#act_off").click(function() {
-	hue.turnOffAll();
-	$(".lightControls").slideUp();
-	displayMessage("Lights Off!");
-});
-$("#act_flash").click(function() {
-	if (isBusy) {
-		return false;
-	}
-	displayMessage("Lights Flashed!");
-	isBusy = true;
-	for (var i in lights) {
-		setTimeout(flashLight, 260*i, lights[i]);
-	}
-	setTimeout(function() {
-		isBusy = false;
-	}, 260*lights.length + 2000);
-});
+	$("#act_on").click(function() {
+		hue.turnOnAll();
+		$(".lightControls").slideDown();
+		displayMessage("Lights On!");
+	});
+	$("#act_off").click(function() {
+		hue.turnOffAll();
+		$(".lightControls").slideUp();
+		displayMessage("Lights Off!");
+	});
+	$("#act_flash").click(function() {
+		if (isBusy) {
+			return false;
+		}
+		displayMessage("Lights Flashed!");
+		isBusy = true;
+		for (var i in lights) {
+			setTimeout(flashLight, 260*i, lights[i]);
+		}
+		setTimeout(function() {
+			isBusy = false;
+		}, 260*lights.length + 2000);
+	});
 
-// ================ Brightness ============== //
+	// ================ Brightness ============== //
 
-$("#act_decrease").click(function() {
-	if (isBusy) {
-		return false;
-	}
-	isBusy = true;
+	$("#act_decrease").click(function() {
+		if (isBusy) {
+			return false;
+		}
+		isBusy = true;
 
-	hue.dimAll(50);
-	displayMessage("Brightness decreased!");
-	setTimeout(function() {
-		isBusy = false;
+		hue.dimAll(50);
+		displayMessage("Brightness decreased!");
+		setTimeout(function() {
+			isBusy = false;
+			loadCurrentLights();
+		}, 1000);
+	});
+	$("#act_increase").click(function() {
+		if (isBusy) {
+			return false;
+		}
+		isBusy = true;
+
+		hue.brightenAll(50);
+		displayMessage("Brightness increased!");
+		setTimeout(function() {
+			isBusy = false;
+			loadCurrentLights();
+		}, 1000);
+	});
+	$(".act_setBright").click(function(evt) {
+		brightness = parseInt(evt.target.getAttribute('data-brightness'));
+		hue.setAllBrightness(brightness);
+		displayMessage("Brightness set to "+parseInt(brightness/255*100)+"%!");
 		loadCurrentLights();
-	}, 1000);
-});
-$("#act_increase").click(function() {
-	if (isBusy) {
-		return false;
-	}
-	isBusy = true;
-
-	hue.brightenAll(50);
-	displayMessage("Brightness increased!");
-	setTimeout(function() {
-		isBusy = false;
-		loadCurrentLights();
-	}, 1000);
-});
-$(".act_setBright").click(function(evt) {
-	brightness = parseInt(evt.target.getAttribute('data-brightness'));
-	hue.setAllBrightness(brightness);
-	displayMessage("Brightness set to "+parseInt(brightness/255*100)+"%!");
-	loadCurrentLights();
-});
+	});
+}
 
 // ================ Scenes ============== //
 
@@ -125,57 +136,28 @@ function setRoom(room, color) {
 	}
 }
 
-$(".setScene").click(function(evt) {
+$(".setScene").click(setScene);
+function setScene(evt) {
 	var sceneID = evt.target.getAttribute('data-scene');
-	var sceneLights = $("#"+sceneID).children();
-	for (var i in sceneLights) {
-		if (i == "length") {
-			break;
-		}
-		classname = "."+sceneLights[i].className.split(' ')[1];
+	$("#"+sceneID+" > div").each(function(i) {
+		classname = "."+$(this).attr('class').split(' ')[1];
 		light = lightElements[classname];
-		color = $("#"+sceneID+" > "+classname).spectrum("get");
+		color = $(this).spectrum("get");
 		setLightColor(light, color);
-	}
+	});
 	displayMessage("Set scene: "+evt.target.innerText);
-});
-function setScene(room, color) {
-	for (var i in room) {
-		setLightColor(lightElements[getElementClass(room[i])], color);
-		setElementColor(room[i], "#"+color);
-	}
 }
 
 // ================ Light Status ============== //
 
 function loadCurrentLights() {
-	var lights = $(".currentLights").children();
-	for (var i in lights) {
-		if (i == "length") {
-			break;
-		}
-		classname = "."+lights[i].className.split(' ')[1];
+	$(".currentLights > div").each(function(i) {
+		classname = "."+$(this).attr('class').split(' ')[1];
 		light = lightElements[classname];
 		color = "#"+hue.getColorHex(light[0]);
 		alpha = hue.getBrightnessValue(light[0]) / 255;
-		$(".currentLights > "+classname).css("background-color", color);
-		$(".currentLights > "+classname).spectrum("set", colors.hexToRGBAString(color, alpha));
-	}
-}
-
-function loadScenes() {
-	$(".sceneMap").each(function(index) {
-		var sceneID = $(this).attr('id')
-		var sceneLights = $(this).children();
-		for (var i in sceneLights) {
-			if (i == "length") {
-				break;
-			}
-			classname = "."+sceneLights[i].className.split(' ')[1];
-			light = lightElements[classname];
-			color = sceneLights[i].getAttribute("data-initial-color");
-			$("#"+sceneID+" > "+classname).spectrum("set", color);
-		}
+		$(this).css("background-color", color);
+		$(this).spectrum("set", colors.hexToRGBAString(color, alpha));
 	});
 }
 
@@ -190,7 +172,7 @@ function setColor(color) {
 }
 
 function setLightColor(light, color, element=null) {
-	if (color._a == 0) {
+	if (color._a == 0) { // Transparent = Ignore
 		return false;
 	}
 	color_hex = "";
@@ -211,7 +193,7 @@ function setLightColor(light, color, element=null) {
 		} else {
 			hue.turnOn(light[0]);
 		}
-		setTimeout(setLightToHex, 100, light[0], color_hex.substring(1, 7), Math.ceil(color._a*255));
+		setTimeout(setLightToHex, 50, light[0], color_hex.substring(1, 7), Math.ceil(color._a*255));
 		if (element != null) {
 			displayMessage("Set "+light[1]+" light to <span style=\"color: "+color_hex+";\">"+color_hex+"</span>");
 		}
@@ -263,66 +245,73 @@ function flashLightElement(light) {
 		light = getElementClass(light)
 	}
 
-	bgcolor = $(light).css('background-color');
-	setElementColor(light, '#000000');
-	setTimeout(setElementColor, 1400, light, bgcolor);
+	element = $(".currentLights > "+light);
+	bgcolor = element.css('background-color');
+	setElementColor(element, '#000000');
+	setTimeout(setElementColor, 1400, element, bgcolor);
 }
 
 // ================ Color Pickers ============== //
 
-$("#act_kitchen").spectrum({
-	chooseText: "Set",
-	showAlpha: true,
-	showPalette: true,
-	palette: color_palette,
-	change: function(color) {
-		setRoom(kitchen, color);
-		displayMessage("Set kitchen lights to "+color.toHexString());
-		$("#act_kitchen").css('background-color', color.toHexString());
-	}
-});
-$("#act_living").spectrum({
-	chooseText: "Set",
-	showAlpha: true,
-	showPalette: true,
-	palette: color_palette,
-	change: function(color) {
-		setRoom(living, color);
-		displayMessage("Set living room lights to "+color.toHexString());
-		$("#act_living").css('background-color', color.toHexString());
-	}
-});
-$("#act_lamp").spectrum({
-	chooseText: "Set",
-	showAlpha: true,
-	showPalette: true,
-	palette: color_palette,
-	change: function(color) {
-		setRoom(lamp, color);
-		displayMessage("Set lamp lights to "+color.toHexString());
-		$("#act_lamp").css('background-color', color.toHexString());
-	}
-});
-$("#act_bath").spectrum({
-	chooseText: "Set",
-	showAlpha: true,
-	showPalette: true,
-	palette: color_palette,
-	change: function(color) {
-		setRoom(bath, color);
-		displayMessage("Set bathroom lights to "+color.toHexString());
-		$("#act_bath").css('background-color', color.toHexString());
-	}
-});
-
-for (var i in lightElements) {
-	$(i).spectrum({
+function createColorpickers() {
+	$("#act_kitchen").spectrum({
 		chooseText: "Set",
 		showAlpha: true,
 		showPalette: true,
 		palette: color_palette,
-		change: setColor,
+		change: function(color) {
+			setRoom(kitchen, color);
+			displayMessage("Set kitchen lights to "+color.toHexString());
+			$("#act_kitchen").css('background-color', color.toHexString());
+		}
 	});
+	$("#act_living").spectrum({
+		chooseText: "Set",
+		showAlpha: true,
+		showPalette: true,
+		palette: color_palette,
+		change: function(color) {
+			setRoom(living, color);
+			displayMessage("Set living room lights to "+color.toHexString());
+			$("#act_living").css('background-color', color.toHexString());
+		}
+	});
+	$("#act_lamp").spectrum({
+		chooseText: "Set",
+		showAlpha: true,
+		showPalette: true,
+		palette: color_palette,
+		change: function(color) {
+			setRoom(lamp, color);
+			displayMessage("Set lamp lights to "+color.toHexString());
+			$("#act_lamp").css('background-color', color.toHexString());
+		}
+	});
+	$("#act_bath").spectrum({
+		chooseText: "Set",
+		showAlpha: true,
+		showPalette: true,
+		palette: color_palette,
+		change: function(color) {
+			setRoom(bath, color);
+			displayMessage("Set bathroom lights to "+color.toHexString());
+			$("#act_bath").css('background-color', color.toHexString());
+		}
+	});
+
+	for (var i in lightElements) {
+		$(i).each(function(index) {
+			lightColor = $(this).attr("data-initial-color");
+			$(this).spectrum({
+				color: lightColor,
+				chooseText: "Set",
+				showAlpha: true,
+				showPalette: true,
+				palette: color_palette,
+				change: setColor,
+			});
+		});
+	}
 }
 
 // ================ Display Messages ============== //
@@ -338,18 +327,4 @@ function displayMessage(msg, isFailure=false) {
 
 function removeElement(element) {
 	element.remove();
-}
-
-// ================ Helpers ============== //
-
-function rgbStringToHex(colorval) {
-    var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-    delete(parts[0]);
-    for (var i = 1; i <= 3; ++i) {
-        parts[i] = parseInt(parts[i]).toString(16);
-        if (parts[i].length == 1) parts[i] = '0' + parts[i];
-    }
-    color = '#' + parts.join('');
-
-    return color;
 }
