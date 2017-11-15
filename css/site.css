@@ -56,6 +56,11 @@ button.btn:hover {
 	background-color: #0000FF;
 	border: 1px solid #000000;
 }
+.circleLight:hover, .squareLight:hover, .rectLight:hover {
+	cursor: pointer;
+	border: 1.5px solid #000000;
+}
+
 .circleLight {
 	width: 20px;
 	height: 20px;

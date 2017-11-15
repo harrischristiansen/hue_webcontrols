@@ -19,6 +19,26 @@ $DEFAULT_LAYOUT = [
 	"bathLight" =>		["circleLight",	"#0000FF"],
 	"guestLight" => 	["circleLight",	"#0000FF"],
 ];
+
+$CLASSNAME_TO_LIGHTNAME = [
+	"sinkLight" =>		"Sink",
+	"ovenLight" =>		"Oven",
+	"barLight" =>		"Bar",
+	"fridgeLight" => 	"Fridge",
+	"midLight" =>		"Middle",
+	"couchLight" => 	"Couch",
+	"tvLight" =>		"TV",
+	"windowLight" => 	"Window",
+	"wallLight" =>		"Wall",
+	"tableLight" => 	"Table",
+	"deskLight" =>		"Under Desk",
+	"lampTop" =>		"Lamp Top",
+	"lampMid" =>		"Lamp Mid",
+	"lampBtm" =>		"Lamp Bottom",
+	"bathLight" =>		"Main Bath",
+	"guestLight" => 	"Guest Bath",
+];
+
 ?>
 
 <div class="roomLayout <? if (isset($currentLights)) { echo 'currentLights'; } ?> <? if (strlen($title) > 1) { echo 'sceneMap'; } ?>" id="<? echo $sceneID; ?>">
@@ -26,7 +46,7 @@ $DEFAULT_LAYOUT = [
 		$layout = $DEFAULT_LAYOUT;
 	}
 	foreach ($layout as $classname => $details) {
-		echo '<div class="'.$details[0].' '.$classname.'" style="background-color: '.$details[1].'" data-initial-color="'.$details[1].'"></div>';
+		echo '<div class="'.$details[0].' '.$classname.'" style="background-color: '.$details[1].'" data-initial-color="'.$details[1].'" title="'.$CLASSNAME_TO_LIGHTNAME[$classname].'"></div>';
 	}
 	?>
 </div>
