@@ -96,6 +96,10 @@ button.btn:hover {
 	left: 160px;
 	top: 170px;
 }
+.cabinetLight {
+	left: 158px;
+	top: 195px;
+}
 
 .midLight {
 	left: 190px;
@@ -122,7 +126,7 @@ button.btn:hover {
 	top: 50px;
 }
 .deskLight {
-	left: 235px;
+	left: 237px;
 	top: 40px;
 }
 

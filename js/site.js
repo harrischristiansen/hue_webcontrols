@@ -13,9 +13,9 @@ var	colors = colors || window.colors,
 var windowLight = 5, couch = 6, wall = 7, mid = 8, tv = 9, strip = 18
 	lamp_mid = 10, lamp_top = 11, lamp_btm = 12,
 	bath_main = 16, bath_guest = 17,
-	fridge = 4, sink = 19, oven = 20, bar = 21;
-var lights = [sink, oven, bar, fridge, mid, couch, tv, windowLight, strip, wall, lamp_top, lamp_mid, lamp_btm, bath_main, bath_guest]
-	kitchen = [sink, oven, bar, fridge],
+	fridge = 4, sink = 19, oven = 20, bar = 21, cabinet = 26;
+var lights = [cabinet, sink, oven, bar, fridge, mid, couch, strip, tv, windowLight, wall, lamp_top, lamp_mid, lamp_btm, bath_main, bath_guest]
+	kitchen = [sink, oven, bar, fridge, cabinet],
 	living = [mid, couch, tv, windowLight, strip, wall],
 	lamp = [lamp_top, lamp_mid, lamp_btm],
 	bath = [bath_main, bath_guest];
@@ -24,6 +24,7 @@ var lightElements = {
 	".ovenLight": [oven, "oven"],
 	".barLight": [bar, "bar"],
 	".fridgeLight": [fridge, "fridge"],
+	".cabinetLight": [cabinet, "cabinet"],
 	".midLight": [mid, "middle"],
 	".couchLight": [couch, "couch"],
 	".tvLight": [tv, "tv"],
