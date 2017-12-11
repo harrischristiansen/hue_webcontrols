@@ -17,5 +17,5 @@
 	<script src='js/spectrum/spectrum.js'></script>
 	
 	<!-- Site JS -->
-	<script type="text/javascript" src="js/site.js"></script>
+	<script type="text/javascript" src="js/site.js?v=2"></script>
 </body></html>

@@ -91,6 +91,14 @@ function createButtonListeners() {
 			isBusy = false;
 		}, 260*lights.length + 2000);
 	});
+	$("#act_noEffects").click(function() {
+		hue.removeEffectAll();
+		displayMessage("Light effects canceled!");
+	});
+	$("#act_colorloop").click(function() {
+		hue.colorloopAll();
+		displayMessage("Lights set to colorloop!");
+	});
 
 	// ================ Brightness ============== //
 

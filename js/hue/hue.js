@@ -22,6 +22,8 @@ var hue = function ($, colors) {
         onState = { on: true },
         shortFlashState = { alert: shortFlashType },
         longFlashState = { alert: longFlashType },
+        noEffectState = { effect: "none" },
+        colorloopState = { effect: "colorloop" },
         transitionTime = null,
         
         /**
@@ -221,6 +223,40 @@ var hue = function ($, colors) {
         };
         
     return {
+        /** 
+         * Remove all effects from lamp at lampIndex
+         *	
+         * @param {Number} lampIndex 1-based index of the Hue lamp to flash.
+         * @return {Object} JSON object containing lamp state.
+         */
+        removeEffect: function(lampIndex /* Number */) {
+            return put(lampIndex, noEffectState);
+        },
+        /** 
+         * Remove all effects from all lamps
+         *
+         * @return {Object} JSON object containing lamp state.
+         */
+        removeEffectAll: function() {
+            return putAll(noEffectState);
+        },
+        /** 
+         * Set lamp at lampIndex to effect colorloop.
+         *	
+         * @param {Number} lampIndex 1-based index of the Hue lamp to flash.
+         * @return {Object} JSON object containing lamp state.
+         */
+        colorloop: function(lampIndex /* Number */) {
+            return put(lampIndex, colorloopState);
+        },
+        /** 
+         * Set all lamps to effect colorloop.
+         *
+         * @return {Object} JSON object containing lamp state.
+         */
+        colorloopAll: function() {
+            return putAll(colorloopState);
+        },
         /** 
          * Flash the lamp at lampIndex for a short time. 
          *	

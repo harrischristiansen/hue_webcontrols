@@ -50,6 +50,8 @@
 				<li class="nav-item"><a class="nav-link btn-success" href="#" id="act_on">All On</a></li>
 				<li class="nav-item"><a class="nav-link btn-danger" href="#" id="act_off">All Off</a></li>
 				<li class="nav-item"><a class="nav-link btn-warning" href="#" id="act_flash">Flash</a></li>
+				<li class="nav-item"><a class="nav-link btn-secondary" href="#" id="act_noEffects">No Effects</a></li>
+				<li class="nav-item"><a class="nav-link btn-primary" href="#" id="act_colorloop">Colorloop</a></li>
 				<li class="nav-item"><a class="nav-link" href="scenes.php" id="act_flash">Scenes</a></li>
 			</ul>
 		</div>
