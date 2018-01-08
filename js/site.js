@@ -7,7 +7,7 @@
 
 var	colors = colors || window.colors,
 	hue = hue || window.hue,
-	IPAddress = '10.3.0.158',
+	IPAddress = '10.3.0.177',
 	APIKey = 'd5orxbetHKF46FCV1wBmnFTVNSkGQWMSjwNOHu2i';
 
 var windowLight = 5, couch = 6, wall = 7, mid = 8, tv = 9, strip = 18

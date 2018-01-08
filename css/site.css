@@ -49,6 +49,7 @@ button.btn:hover {
 	height: 250px;
 	margin-left: auto;
 	margin-right: auto;
+	z-index: 0;
 }
 
 .circleLight, .squareLight, .rectLight {
@@ -56,6 +57,14 @@ button.btn:hover {
 	background-color: #0000FF;
 	border: 1px solid #000000;
 }
+/*.circleLight::before {
+	content: "";
+	width: 1%;
+	height: 1%;
+	position: absolute;
+	z-index: -1;
+	box-shadow: 7px 7px 25px 25px #0000FF;
+}*/
 .circleLight:hover, .squareLight:hover, .rectLight:hover {
 	cursor: pointer;
 	border: 1.5px solid #000000;
@@ -67,7 +76,6 @@ button.btn:hover {
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
-	z-index: 1;
 }
 .squareLight {
 	width: 25px;
