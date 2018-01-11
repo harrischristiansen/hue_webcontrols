@@ -1,7 +1,7 @@
 /*
 	@ Harris Christiansen (Harris@HarrisChristiansen.com)
 	November 2017
-	Project: Hue Web Controls
+	Project: Hue Web Controls - github.com/harrischristiansen/hue_webcontrols
 */
 
 
@@ -13,10 +13,10 @@ var	colors = colors || window.colors,
 var windowLight = 5, couch = 6, wall = 7, mid = 8, tv = 9, strip = 18
 	lamp_mid = 10, lamp_top = 11, lamp_btm = 12,
 	bath_main = 16, bath_guest = 17,
-	fridge = 4, sink = 19, oven = 20, bar = 21, cabinet = 26;
-var lights = [cabinet, sink, oven, bar, fridge, mid, couch, strip, tv, windowLight, wall, lamp_top, lamp_mid, lamp_btm, bath_main, bath_guest]
+	fridge = 4, sink = 19, oven = 20, bar = 21, cabinet = 26, table=27;
+var lights = [cabinet, sink, oven, bar, fridge, mid, couch, strip, tv, table, windowLight, wall, lamp_top, lamp_mid, lamp_btm, bath_main, bath_guest]
 	kitchen = [sink, oven, bar, fridge, cabinet],
-	living = [mid, couch, tv, windowLight, strip, wall],
+	living = [mid, couch, tv, windowLight, strip, wall, table],
 	lamp = [lamp_top, lamp_mid, lamp_btm],
 	bath = [bath_main, bath_guest];
 var lightElements = {
@@ -30,6 +30,7 @@ var lightElements = {
 	".tvLight": [tv, "tv"],
 	".windowLight": [windowLight, "window"],
 	".wallLight": [wall, "wall"],
+	".tableLight": [table, "table"],
 	".deskLight": [strip, "tv desk"],
 	".lampTop": [lamp_top, "lamp top"],
 	".lampMid": [lamp_mid, "lamp middle"],
