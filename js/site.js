@@ -1,5 +1,5 @@
 /*
-	@ Harris Christiansen (Harris@HarrisChristiansen.com)
+	@ Harris Christiansen (code@HarrisChristiansen.com)
 	November 2017
 	Project: Hue Web Controls - github.com/harrischristiansen/hue_webcontrols
 */

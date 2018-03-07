@@ -4,7 +4,9 @@
 
 ## Synopsis
 
-Basic web controller for [Philips Hue](http://meethue.com) lighting system.
+Basic web controller for [Philips Hue](http://meethue.com) lighting system.  
+
+Most of this project has been migrated to my newer web lighting controller: [github.com/harrischristiansen/controlshow](https://github.com/harrischristiansen/controlshow)  
 
 ## Features
 
@@ -29,4 +31,5 @@ Basic web controller for [Philips Hue](http://meethue.com) lighting system.
 
 ## Contributors
 
-@harrischristiansen [HarrisChristiansen.com](http://www.harrischristiansen.com) (harris@harrischristiansen.com)  
+@harrischristiansen [HarrisChristiansen.com](http://www.harrischristiansen.com) (code@harrischristiansen.com)  
+
