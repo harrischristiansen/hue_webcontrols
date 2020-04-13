@@ -52,6 +52,8 @@ button.btn:hover {
 	z-index: 0;
 }
 
+/* ------------------------ Light Types ------------------------ */
+
 .circleLight, .squareLight, .rectLight {
 	position: absolute;
 	background-color: #0000FF;
@@ -88,76 +90,72 @@ button.btn:hover {
 	z-index: 0;
 }
 
-.sinkLight {
-	left: 190px;
-	top: 225px;
-}
-.ovenLight {
-	left: 190px;
-	top: 200px;
-}
-.barLight {
-	left: 190px;
-	top: 175px;
-}
-.fridgeLight {
-	left: 160px;
-	top: 170px;
-}
-.cabinetLight {
-	left: 158px;
-	top: 195px;
-}
+/* ------------------------ Light Positions ------------------------ */
 
-.midLight {
-	left: 190px;
-	top: 95px;
-}
-.couchLight {
-	left: 190px;
-	top: 70px;
-}
-.tvLight {
-	left: 190px;
-	top: 45px;
-}
-.windowLight {
-	left: 190px;
+.midbed_1 {
 	top: 20px;
-}
-.wallLight {
 	left: 240px;
-	top: 15px;
 }
-.tableLight {
-	left: 165px;
-	top: 50px;
-}
-.deskLight {
-	left: 237px;
-	top: 40px;
-}
-
-.lampTop {
-	left: 20px;
+.midbed_2 {
 	top: 20px;
+	left: 260px;
 }
-.lampMid {
-	left: 35px;
-	top: 35px;
+.midbed_3 {
+	top: 20px;
+	left: 280px;
 }
-.lampBtm {
-	left: 50px;
-	top: 50px;
+.tv_cabinet {
+	top: 120px;
+	left: 280px;
+}
+.glass_lamp {
+	top: 200px;
+	left: 100px;
+}
+.shelve_lamp {
+	top: 100px;
+	left: 10px;
+}
+.glass_cabinet {
+	top: 100px;
+	left: 250px;
+}
+.bloom_1 {
+	top: 160px;
+	left: 20px;
+}
+.bloom_2 {
+	top: 160px;
+	left: 40px;
+}
+.bloom_3 {
+	top: 160px;
+	left: 60px;
+}
+.play_1 {
+	top: 180px;
+	left: 20px;
+}
+.play_2 {
+	top: 180px;
+	left: 40px;
+}
+.play_3 {
+	top: 180px;
+	left: 60px;
+}
+.go_1 {
+	top: 200px;
+	left: 20px;
+}
+.go_2 {
+	top: 200px;
+	left: 40px;
+}
+.go_3 {
+	top: 200px;
+	left: 60px;
 }
 
-.bathLight {
-	left: 340px;
-	top: 190px;
-}
-.guestLight {
-	left: 40px;
-	top: 190px;
-}
 
 /* ------------------------ End ------------------------- */

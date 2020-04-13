@@ -7,36 +7,36 @@
 
 var	colors = colors || window.colors,
 	hue = hue || window.hue,
-	IPAddress = '10.3.0.177',
-	APIKey = 'd5orxbetHKF46FCV1wBmnFTVNSkGQWMSjwNOHu2i';
+	IPAddress = '192.168.50.133',
+	APIKey = 'oDKerwXFsTJ56RyyIcVRzf8iUPSAR58nqeaFjbqZ';
 
-var windowLight = 5, couch = 6, wall = 7, mid = 8, tv = 9, strip = 18
-	lamp_mid = 10, lamp_top = 11, lamp_btm = 12,
-	bath_main = 16, bath_guest = 17,
-	fridge = 4, sink = 19, oven = 20, bar = 21, cabinet = 26, table=27;
-var lights = [cabinet, sink, oven, bar, fridge, mid, couch, strip, tv, table, windowLight, wall, lamp_top, lamp_mid, lamp_btm, bath_main, bath_guest]
-	kitchen = [sink, oven, bar, fridge, cabinet],
-	living = [mid, couch, tv, windowLight, strip, wall, table],
-	lamp = [lamp_top, lamp_mid, lamp_btm],
-	bath = [bath_main, bath_guest];
+var midbed_1=1, midbed_2=2, midbed_3=14,
+	glass_lamp=7, shelve_lamp=13,
+	tv_cabinet=8, glass_cabinet=10,
+	bloom_1=4, bloom_2=5, bloom_3=6,
+	play_1=15, play_2=16, play_3=17,
+	go_1=9, go_2=11, go_3=12;
+var lights = [midbed_1, midbed_2, midbed_3, glass_lamp, shelve_lamp, tv_cabinet, glass_cabinet, bloom_1, bloom_2, bloom_3, play_1, play_2, play_3, go_1, go_2, go_3],
+	room_family = [tv_cabinet, glass_cabinet],
+	room_living = [glass_lamp, shelve_lamp, bloom_1, bloom_2, bloom_3, play_1, play_2, play_3, go_1, go_2, go_3],
+	room_midbed = [midbed_1, midbed_2, midbed_3];
 var lightElements = {
-	".sinkLight": [sink, "sink"],
-	".ovenLight": [oven, "oven"],
-	".barLight": [bar, "bar"],
-	".fridgeLight": [fridge, "fridge"],
-	".cabinetLight": [cabinet, "cabinet"],
-	".midLight": [mid, "middle"],
-	".couchLight": [couch, "couch"],
-	".tvLight": [tv, "tv"],
-	".windowLight": [windowLight, "window"],
-	".wallLight": [wall, "wall"],
-	".tableLight": [table, "table"],
-	".deskLight": [strip, "tv desk"],
-	".lampTop": [lamp_top, "lamp top"],
-	".lampMid": [lamp_mid, "lamp middle"],
-	".lampBtm": [lamp_btm, "lamp bottom"],
-	".bathLight": [bath_main, "main bathroom"],
-	".guestLight": [bath_guest, "guest bathroom"],
+	".midbed_1": [midbed_1, "Midbed Lamp Middle"],
+	".midbed_2": [midbed_2, "Midbed Lamp Top"],
+	".midbed_3": [midbed_3, "Miedbed Lamp Bottom"],
+	".tv_cabinet": [tv_cabinet, "TV Cabinet"],
+	".glass_lamp": [glass_lamp, "Glass Lamp"],
+	".shelve_lamp": [shelve_lamp, "Shelve Lamp"],
+	".glass_cabinet": [glass_cabinet, "Glass Cabinet"],
+	".bloom_1": [bloom_1, "Bloom 1"],
+	".bloom_2": [bloom_2, "Bloom 2"],
+	".bloom_3": [bloom_3, "Bloom 3"],
+	".play_1": [play_1, "Play 1"],
+	".play_2": [play_2, "Play 2"],
+	".play_3": [play_3, "Play 3"],
+	".go_1": [go_1, "Go 1"],
+	".go_2": [go_2, "Go 2"],
+	".go_3": [go_3, "Go 3"],
 };
 var color_palette = ['transparent', '#000001', '#FF0000', '#904000', '#ffb400', '#ff00b0', '#bb00ff', '#0000FF', '#00FF00', '#8183ff', '#e1e2fb', '#f9bbbb', '#f9bbf1']
 
@@ -264,15 +264,15 @@ function flashLightElement(light) {
 // ================ Color Pickers ============== //
 
 function createColorpickers() {
-	$("#act_kitchen").spectrum({
+	$("#act_family").spectrum({
 		chooseText: "Set",
 		showAlpha: true,
 		showPalette: true,
 		palette: color_palette,
 		change: function(color) {
-			setRoom(kitchen, color);
-			displayMessage("Set kitchen lights to "+color.toHexString());
-			$("#act_kitchen").css('background-color', color.toHexString());
+			setRoom(room_family, color);
+			displayMessage("Set family room lights to "+color.toHexString());
+			$("#act_family").css('background-color', color.toHexString());
 		}
 	});
 	$("#act_living").spectrum({
@@ -281,31 +281,20 @@ function createColorpickers() {
 		showPalette: true,
 		palette: color_palette,
 		change: function(color) {
-			setRoom(living, color);
+			setRoom(room_living, color);
 			displayMessage("Set living room lights to "+color.toHexString());
 			$("#act_living").css('background-color', color.toHexString());
 		}
 	});
-	$("#act_lamp").spectrum({
+	$("#act_midbed").spectrum({
 		chooseText: "Set",
 		showAlpha: true,
 		showPalette: true,
 		palette: color_palette,
 		change: function(color) {
-			setRoom(lamp, color);
-			displayMessage("Set lamp lights to "+color.toHexString());
-			$("#act_lamp").css('background-color', color.toHexString());
-		}
-	});
-	$("#act_bath").spectrum({
-		chooseText: "Set",
-		showAlpha: true,
-		showPalette: true,
-		palette: color_palette,
-		change: function(color) {
-			setRoom(bath, color);
-			displayMessage("Set bathroom lights to "+color.toHexString());
-			$("#act_bath").css('background-color', color.toHexString());
+			setRoom(room_midbed, color);
+			displayMessage("Set game room lights to "+color.toHexString());
+			$("#act_midbed").css('background-color', color.toHexString());
 		}
 	});
 
